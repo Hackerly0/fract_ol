@@ -41,7 +41,10 @@ typedef struct s_vars {
 int mandelbrot(double c_re, double c_im);
 //void    draw_mandelbrot(t_data *img);
 void    draw_mandelbrot(t_data *img, t_vars *vars);
-void    draw_julia(t_data *img, double c_re_julia, double c_im_julia);
-int julia(double z_re, double z_im, double c_re, double c_im);
+void	draw_julia(t_data *img, t_vars *vars, double c_re_julia, double c_im_julia);
+int     julia(double z_re, double z_im, double c_re, double c_im);
+int     handle_mouse(int button, int x, int y, void *param);
+int     handle_keypress(int keycode, void *param);
+int     close_window(void *param);
 
 #endif

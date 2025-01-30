@@ -9,9 +9,15 @@ typedef struct s_list
 	double	c_im;
 	double	c_re;
 	char	*pixel;
+	double	z_re;
+	double	z_im;
+	double	real_range;
+	double	img_range;
+	double	adj_min_real;
+	double	adj_min_img;
 }	t_list;
 
-static void	init_vars(t_list *data, double *z_re, double *z_im)
+static void	init_vars(t_list *data)
 {
 
 	data->c_im = 0;
@@ -21,15 +27,28 @@ static void	init_vars(t_list *data, double *z_re, double *z_im)
 	data->pixel = NULL;
 	data->x = 0;
 	data->y = 0;
-	z_re = 0;
-	z_im = 0;
+	data->z_re = 0;
+	data->z_im = 0;
+	data->real_range = 0;
+	data->img_range = 0;
+	data->adj_min_real = 0;
+	data->adj_min_img = 0;
 }
 
 static int	get_color(int iter, int max_iter)
 {
+	double	t;
+	int		r;
+	int		g;
+	int		b;
+
 	if (iter == max_iter)
 		return (0x000000);
-	return ((int)(0xFFFFFF * ((double)iter / max_iter)));
+	t = (double)iter / max_iter;
+	r = (int)(8.5 * (1 - t) * (1 - t) * (1 - t) * t * 255);
+	g = (int)(15 * (1 - t) * (1 - t) * t * t * 255);
+	b = (int)(9 * (1 - t) * t * t * t * 255);
+	return ((r << 16) | (g << 8) | b);
 }
 
 int	julia(double z_re, double z_im, double c_re, double c_im)
@@ -49,23 +68,25 @@ int	julia(double z_re, double z_im, double c_re, double c_im)
 	return (iter);
 }
 
-void	draw_julia(t_data *img, double c_re_julia, double c_im_julia)
+void	draw_julia(t_data *img, t_vars *vars, double c_re_julia, double c_im_julia)
 {
 	t_list	list;
-	double	z_re;
-	double	z_im;
 
-	init_vars(&list, &z_re, &z_im);
+	init_vars(&list);
+	list.real_range = (MAX_REAL - MIN_REAL) / vars->zoom;
+	list.img_range = (MAX_IMG - MIN_IMG) / vars->zoom;
+	list.adj_min_real = MIN_REAL + list.real_range * vars->offset_x;
+	list.adj_min_img = MIN_IMG + list.img_range * vars->offset_y;
 	while (list.y < HEIGHT)
 	{
 		list.x = 0;
 		while (list.x < WIDTH)
 		{
-			z_re = MIN_REAL + (double)list.x / WIDTH
-				* (MAX_REAL - MIN_REAL);
-			z_im = MIN_IMG + (double)list.y / HEIGHT
-				* (MAX_IMG - MIN_IMG);
-			list.iter = julia(z_re, z_im, c_re_julia, c_im_julia);
+			list.z_re = list.adj_min_real + (double)list.x / WIDTH
+				* list.real_range;
+			list.z_im = list.adj_min_img + (double)list.y / HEIGHT
+				* list.img_range;
+			list.iter = julia(list.z_re, list.z_im, c_re_julia, c_im_julia);
 			list.color = get_color(list.iter, MAX_ITER);
 			list.pixel = img->addr + (list.y * img->line_length + list.x
 					* (img->bits_per_pixel / 8));
