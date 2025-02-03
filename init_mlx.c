@@ -20,30 +20,31 @@ void	ft_free_graphics(t_data *graphics)
 	}
 }
 
-void	ft_init_graphics(t_data *graphics)
+void	ft_init_graphics(t_vars *graphics)
 {
-	ft_init_graphics_struct(graphics);
 	graphics->mlx = mlx_init();
 	if (!graphics->mlx)
 		ft_error_exit("Failed to initialize MLX");
+
 	graphics->win = mlx_new_window(graphics->mlx, WIDTH, HEIGHT, "Fract-ol");
 	if (!graphics->win)
 	{
 		ft_free_graphics(graphics);
 		ft_error_exit("Failed to create MLX window");
 	}
+
 	graphics->img.img = mlx_new_image(graphics->mlx, WIDTH, HEIGHT);
 	if (!graphics->img.img)
 	{
 		ft_free_graphics(graphics);
 		ft_error_exit("Failed to create MLX image");
 	}
-	graphics->img.addr = (int *)mlx_get_data_addr(graphics->img, &graphics->bits_per_pixel,
-			&graphics->line_length, &graphics->endian);
+
+	graphics->img.addr = mlx_get_data_addr(graphics->img.img,
+			&graphics->img.bits_per_pixel, &graphics->img.line_length, &graphics->img.endian);
 	if (!graphics->img.addr)
 	{
 		ft_free_graphics(graphics);
 		ft_error_exit("Failed to get image data address");
 	}
-	graphics->fractal = fractal;
 }

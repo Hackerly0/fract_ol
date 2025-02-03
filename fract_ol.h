@@ -47,6 +47,6 @@ int     handle_mouse(int button, int x, int y, void *param);
 int     handle_keypress(int keycode, void *param);
 int     close_window(void *param);
 double  ft_atof(const char *str);
-void	ft_init_graphics(t_data *graphics);
+void	ft_init_graphics(t_vars *graphics);
 
 #endif
