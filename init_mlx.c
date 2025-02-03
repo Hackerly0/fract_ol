@@ -1,11 +1,19 @@
 #include "fract_ol.h"
 
-void	ft_free_graphics(t_data *graphics)
+void	ft_error_exit(char *message)
 {
-	if (graphics->img)
+	perror(message);
+	exit(1);
+}
+
+void	ft_free_graphics(t_vars *graphics)
+{
+	if (!graphics)
+    	return;
+	if (graphics->img.img)
 	{
-		mlx_destroy_image(graphics->mlx, graphics->img);
-		graphics->img = NULL;
+		mlx_destroy_image(graphics->mlx, graphics->img.img);
+		graphics->img.img = NULL;
 	}
 	if (graphics->win)
 	{

@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include <X11/X.h>
 #include <X11/keysymdef.h>
+#include <errno.h>
+#include <stdio.h>
 
 #define ON_KEYDOWN 2
 #define ON_KEYUP 3
@@ -35,6 +37,7 @@ typedef struct s_vars {
     double  zoom;
     double  offset_x;
     double  offset_y;
+    int     fractal;
     t_data  img;
 } t_vars;
 
@@ -43,10 +46,11 @@ int mandelbrot(double c_re, double c_im);
 void    draw_mandelbrot(t_data *img, t_vars *vars);
 void	draw_julia(t_data *img, t_vars *vars, double c_re_julia, double c_im_julia);
 int     julia(double z_re, double z_im, double c_re, double c_im);
-int     handle_mouse(int button, int x, int y, void *param);
+int     handle_mouse(int button, int x, int y, void *param, char*argv[]);
 int     handle_keypress(int keycode, void *param);
 int     close_window(void *param);
 double  ft_atof(const char *str);
 void	ft_init_graphics(t_vars *graphics);
+int     ft_strncmp(const char *s1, const char *s2, size_t n);
 
 #endif

@@ -1,5 +1,5 @@
 NAME = fract_ol
-SRCS = main.c mandelbrot.c julia.c handel_input.c
+SRCS = main.c mandelbrot.c julia.c handel_input.c ft_atof.c init_mlx.c ft_strncmp.c
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 OBJS = $(SRCS:.c=.o)

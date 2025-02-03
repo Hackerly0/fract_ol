@@ -1,3 +1,5 @@
+#include "fract_ol.h"
+
 int check_argv(char *argv[])
 {
 	if (argv[2] > 2 || argv[2] < -2)
