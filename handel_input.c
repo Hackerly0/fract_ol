@@ -17,14 +17,14 @@ void	intialize_mouse(t_mouse *list)
 	list->real_range = 0;
 	list->zoom_factor = 0;
 }
-void	draw_fractal(t_vars *vars, char* argv[])
+void	draw_fractal(t_vars *vars)
 {
 	if (vars->fractal == 2)
-		draw_julia(&vars->img, vars, ft_atof(argv[2]), ft_atof(argv[3]));
+		draw_julia(&vars->img, vars, vars->juila_re, vars->juila_re);
 	else if (vars->fractal == 1)
 		draw_mandelbrot(&vars->img, vars);
 }
-int	handle_mouse(int button, int x, int y, void *param, char* argv[])
+int	handle_mouse(int button, int x, int y, void *param)
 {
 	t_vars	*vars;
 	t_mouse	list;
@@ -48,7 +48,7 @@ int	handle_mouse(int button, int x, int y, void *param, char* argv[])
 		- (x / (double)WIDTH);
 	vars->offset_y = (list.mouse_img - MIN_IMG) / list.img_range
 		- (y / (double)HEIGHT);
-	draw_fractal(vars, argv);
+	draw_fractal(vars);
 	mlx_put_image_to_window(vars->mlx, vars->win, vars->img.img, 0, 0);
 	return (0);
 }

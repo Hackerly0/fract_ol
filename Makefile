@@ -1,15 +1,15 @@
 NAME = fract_ol
 SRCS = main.c mandelbrot.c julia.c handel_input.c ft_atof.c init_mlx.c ft_strncmp.c
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 OBJS = $(SRCS:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(OBJS) -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -o $(NAME)
+	$(CC) $(OBJS) -Lmlx_linux -lmlx_Linux -g -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -o $(NAME)
 
 %.o: %.c
-	$(CC) $(CFLAGS) -I/usr/include -Imlx_linux -O3 -c $< -o $@
+	$(CC) $(CFLAGS) -I/usr/include -g -Imlx_linux -O3 -c $< -o $@
 
 clean:
 	rm -f $(OBJS)
