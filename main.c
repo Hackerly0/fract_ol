@@ -1,14 +1,34 @@
 #include "fract_ol.h"
+#include <stdlib.h>
 
-static double	check_range(const char *str)
+static double	check_input(const char *str)
 {
-	double i;
+	double	i;
+	size_t	j;
+	int	dot_count;
 
+	dot_count = 0;
+	if (!str || str[0] == '\0')
+		exit(1);
 	i = ft_atof(str);
 	if (i > 2 || i < -2)
 		exit(1);
+	j = 0;
+	while (str[j] != '\0')
+	{
+		if (str[j] == '.')
+			dot_count++;
+		if (!((str[j] >= '0' && str[j] <= '9') || str[j] == '.' || 
+		      (j == 0 && (str[j] == '-' || str[j] == '+')))) // '-' or '+' only at index 0
+			exit(1);
+		j++;
+	}
+	if (dot_count > 1)
+		exit(1);
+
 	return (i);
 }
+
 
 int main(int argc, char **argv)
 {
@@ -21,15 +41,15 @@ int main(int argc, char **argv)
 			vars.fractal = 1;
 		else if (!ft_strncmp(argv[1], "julia", 5))
 		{
-			vars.juila_re = check_range(argv[2]);
-			vars.julia_img = check_range(argv[3]);
+			vars.juila_re = check_input(argv[2]);
+			vars.julia_img = check_input(argv[3]);
 			vars.fractal = 2;
 		}
 		ft_init_graphics(&vars);
 		vars.zoom = 1.0;
 		vars.offset_x = 0.0;
 		vars.offset_y = 0.0;
-		draw_fractal(&vars, argv);
+		draw_fractal(&vars);
 		mlx_put_image_to_window(vars.mlx, vars.win, vars.img.img, 0, 0);
 		mlx_mouse_hook(vars.win, handle_mouse, &vars);
 		mlx_hook(vars.win, 2, 1L << 0, handle_keypress, &vars);

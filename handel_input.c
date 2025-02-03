@@ -20,7 +20,7 @@ void	intialize_mouse(t_mouse *list)
 void	draw_fractal(t_vars *vars)
 {
 	if (vars->fractal == 2)
-		draw_julia(&vars->img, vars, vars->juila_re, vars->juila_re);
+		draw_julia(&vars->img, vars, vars->juila_re, vars->julia_img);
 	else if (vars->fractal == 1)
 		draw_mandelbrot(&vars->img, vars);
 }
