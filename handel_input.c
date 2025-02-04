@@ -1,14 +1,5 @@
 #include "fract_ol.h"
 
-typedef struct s_mouse
-{
-	double	zoom_factor;
-	double	real_range;
-	double	img_range;
-	double	mouse_real;
-	double	mouse_img;
-}	t_mouse;
-
 void	intialize_mouse(t_mouse *list)
 {
 	list->img_range = 0;
@@ -17,6 +8,7 @@ void	intialize_mouse(t_mouse *list)
 	list->real_range = 0;
 	list->zoom_factor = 0;
 }
+
 void	draw_fractal(t_vars *vars)
 {
 	if (vars->fractal == 2)
@@ -24,6 +16,7 @@ void	draw_fractal(t_vars *vars)
 	else if (vars->fractal == 1)
 		draw_mandelbrot(&vars->img, vars);
 }
+
 int	handle_mouse(int button, int x, int y, void *param)
 {
 	t_vars	*vars;

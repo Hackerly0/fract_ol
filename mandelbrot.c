@@ -1,19 +1,5 @@
 #include "fract_ol.h"
-
-typedef struct s_list
-{
-	int		y;
-	int		x;
-	int		iter;
-	int		color;
-	double	c_im;
-	double	c_re;
-	char	*pixel;
-	double	real_range;
-	double	img_range;
-	double	adj_min_real;
-	double	adj_min_img;
-}	t_list;
+#include "fractals.h"
 
 static void	init_vars(t_list *data)
 {
@@ -45,7 +31,6 @@ static int	get_color(int iter, int max_iter)
 	b = (int)(9 * (1 - t) * t * t * t * 255);
 	return ((r << 16) | (g << 8) | b);
 }
-
 
 int	mandelbrot(double c_re, double c_im)
 {
@@ -87,8 +72,8 @@ void	draw_mandelbrot(t_data *img, t_vars *vars)
 				/ HEIGHT * list.img_range;
 			list.iter = mandelbrot(list.c_re, list.c_im);
 			list.color = get_color(list.iter, MAX_ITER);
-			list.pixel = img->addr + (list.y * img->line_length
-					+ list.x * (img->bits_per_pixel / 8));
+			list.pixel = img->addr + (list.y * img->line_len
+					+ list.x * (img->bpp / 8));
 			*(unsigned int *)list.pixel = list.color;
 			list.x++;
 		}

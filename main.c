@@ -5,7 +5,7 @@ static double	check_input(const char *str)
 {
 	double	i;
 	size_t	j;
-	int	dot_count;
+	int		dot_count;
 
 	dot_count = 0;
 	if (!str || str[0] == '\0')
@@ -18,21 +18,19 @@ static double	check_input(const char *str)
 	{
 		if (str[j] == '.')
 			dot_count++;
-		if (!((str[j] >= '0' && str[j] <= '9') || str[j] == '.' || 
-		      (j == 0 && (str[j] == '-' || str[j] == '+')))) // '-' or '+' only at index 0
+		if (!((str[j] >= '0' && str[j] <= '9') || str[j] == '.'
+				|| (j == 0 && (str[j] == '-' || str[j] == '+'))))
 			exit(1);
 		j++;
 	}
 	if (dot_count > 1)
 		exit(1);
-
 	return (i);
 }
 
-
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-	t_vars vars;
+	t_vars	vars;
 
 	if ((argc == 2 && !ft_strncmp(argv[1], "mandelbrot", 11)) || (argc == 4
 			&& !ft_strncmp(argv[1], "julia", 6)))

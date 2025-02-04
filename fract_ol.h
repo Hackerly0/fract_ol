@@ -28,8 +28,8 @@
 typedef struct s_data {
     void    *img;
     char    *addr;
-    int     bits_per_pixel;
-    int     line_length;
+    int     bpp;
+    int     line_len;
     int     endian;
 } t_data;
 
@@ -44,6 +44,15 @@ typedef struct s_vars {
     double  julia_img;
     t_data  img;
 } t_vars;
+
+typedef struct s_mouse
+{
+	double	zoom_factor;
+	double	real_range;
+	double	img_range;
+	double	mouse_real;
+	double	mouse_img;
+}	t_mouse;
 
 int mandelbrot(double c_re, double c_im);
 //void    draw_mandelbrot(t_data *img);

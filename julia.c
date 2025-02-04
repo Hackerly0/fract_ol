@@ -1,25 +1,8 @@
 #include "fract_ol.h"
-
-typedef struct s_list
-{
-	int		y;
-	int		x;
-	int		iter;
-	int		color;
-	double	c_im;
-	double	c_re;
-	char	*pixel;
-	double	z_re;
-	double	z_im;
-	double	real_range;
-	double	img_range;
-	double	adj_min_real;
-	double	adj_min_img;
-}	t_list;
+#include "fractals.h"
 
 static void	init_vars(t_list *data)
 {
-
 	data->c_im = 0;
 	data->c_re = 0;
 	data->color = 0;
@@ -68,7 +51,7 @@ int	julia(double z_re, double z_im, double c_re, double c_im)
 	return (iter);
 }
 
-void	draw_julia(t_data *img, t_vars *vars, double c_re_julia, double c_im_julia)
+void	draw_julia(t_data *img, t_vars *vars, double c_re, double c_im)
 {
 	t_list	list;
 
@@ -86,10 +69,10 @@ void	draw_julia(t_data *img, t_vars *vars, double c_re_julia, double c_im_julia)
 				* list.real_range;
 			list.z_im = list.adj_min_img + (double)list.y / HEIGHT
 				* list.img_range;
-			list.iter = julia(list.z_re, list.z_im, c_re_julia, c_im_julia);
+			list.iter = julia(list.z_re, list.z_im, c_re, c_im);
 			list.color = get_color(list.iter, MAX_ITER);
-			list.pixel = img->addr + (list.y * img->line_length + list.x
-					* (img->bits_per_pixel / 8));
+			list.pixel = img->addr + (list.y * img->line_len + list.x
+					* (img->bpp / 8));
 			*(unsigned int *)list.pixel = list.color;
 			list.x++;
 		}

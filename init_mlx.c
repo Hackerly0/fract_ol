@@ -9,7 +9,7 @@ void	ft_error_exit(char *message)
 void	ft_free_graphics(t_vars *graphics)
 {
 	if (!graphics)
-    	return;
+		return ;
 	if (graphics->img.img)
 	{
 		mlx_destroy_image(graphics->mlx, graphics->img.img);
@@ -28,31 +28,28 @@ void	ft_free_graphics(t_vars *graphics)
 	}
 }
 
-void	ft_init_graphics(t_vars *graphics)
+void	ft_init_graphics(t_vars *gfx)
 {
-	graphics->mlx = mlx_init();
-	if (!graphics->mlx)
+	gfx->mlx = mlx_init();
+	if (!gfx->mlx)
 		ft_error_exit("Failed to initialize MLX");
-
-	graphics->win = mlx_new_window(graphics->mlx, WIDTH, HEIGHT, "Fract-ol");
-	if (!graphics->win)
+	gfx->win = mlx_new_window(gfx->mlx, WIDTH, HEIGHT, "Fract-ol");
+	if (!gfx->win)
 	{
-		ft_free_graphics(graphics);
+		ft_free_graphics(gfx);
 		ft_error_exit("Failed to create MLX window");
 	}
-
-	graphics->img.img = mlx_new_image(graphics->mlx, WIDTH, HEIGHT);
-	if (!graphics->img.img)
+	gfx->img.img = mlx_new_image(gfx->mlx, WIDTH, HEIGHT);
+	if (!gfx->img.img)
 	{
-		ft_free_graphics(graphics);
+		ft_free_graphics(gfx);
 		ft_error_exit("Failed to create MLX image");
 	}
-
-	graphics->img.addr = mlx_get_data_addr(graphics->img.img,
-			&graphics->img.bits_per_pixel, &graphics->img.line_length, &graphics->img.endian);
-	if (!graphics->img.addr)
+	gfx->img.addr = mlx_get_data_addr(gfx->img.img, &gfx->img.bpp,
+			&gfx->img.line_len, &gfx->img.endian);
+	if (!gfx->img.addr)
 	{
-		ft_free_graphics(graphics);
+		ft_free_graphics(gfx);
 		ft_error_exit("Failed to get image data address");
 	}
 }
