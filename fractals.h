@@ -1,3 +1,6 @@
+#ifndef FRACTALS_H
+# define FRACTALS_H
+
 typedef struct s_list
 {
 	int		y;
@@ -14,3 +17,4 @@ typedef struct s_list
 	double	adj_min_real;
 	double	adj_min_img;
 }	t_list;
+#endif

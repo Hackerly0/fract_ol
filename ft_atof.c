@@ -27,13 +27,6 @@ static bool	is_valid_input(const char *str)
 	return (true);
 }
 
-static int	skip_whitespace(const char *str, int i)
-{
-	while ((str[i] >= 9 && str[i] <= 13) || str[i] == ' ')
-		i++;
-	return (i);
-}
-
 static void	process_integer_part(const char *str, int *i, double *number)
 {
 	while (str[*i] >= '0' && str[*i] <= '9')
@@ -83,7 +76,8 @@ double	ft_atof(const char *str)
 	if (str == NULL)
 		return (0.0);
 	i = 0;
-	i = skip_whitespace(str, i);
+	while ((str[i] >= 9 && str[i] <= 13) || str[i] == ' ')
+		i++;
 	if (!is_valid_input(str + i))
 		return (0.0);
 	return (read_number(str, &i));
